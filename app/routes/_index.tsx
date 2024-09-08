@@ -1,5 +1,8 @@
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import type { Post } from "@prisma/client";
+import { getPosts } from "~/services/post.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,13 +11,12 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-type Post = {
-  title: string;
-  body: string;
-};
-
-export const loader: LoaderFunction = () => {
-  return [{ title: "first", body: "My first post" }];
+export const loader: LoaderFunction = async () => {
+  const posts = await getPosts();
+  if (!posts) {
+    return [{ title: "first", body: "My first post" }];
+  }
+  return json(posts);
 };
 
 export default function Index() {
