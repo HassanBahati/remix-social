@@ -1,37 +1,23 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { Post } from "@prisma/client";
+import { json, LoaderFunction } from "@remix-run/node";
+import { useParams } from "react-router-dom";
+import { getPostById, getPosts } from "~/services/post.server";
 import { Link, useLoaderData } from "@remix-run/react";
-import { json } from "@remix-run/node";
-import type { Post } from "@prisma/client";
-import { getPosts } from "~/services/post.server";
 import PostCard from "~/components/post-card";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "Remix Social" },
-    { name: "description", content: "Welcome to Remix Social!" },
-  ];
-};
 
 export const loader: LoaderFunction = async () => {
   const posts = await getPosts();
-  if (!posts) {
-    return [{ title: "first", body: "My first post" }];
-  }
   return json(posts);
 };
 
-export default function Index() {
+export default function PostDetails() {
   const posts = useLoaderData<Post[]>();
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <main className="flex-grow overflow-auto p-4">
         <div className="max-w-3xl mx-auto space-y-8">
-          <div className="flex justify-between  items-baseline ">
-            <h2 className="text-3xl font-bold">Recent Posts</h2>
-            <Link to={"/posts"} className="text-sm underline">
-              View All Posts
-            </Link>
-          </div>
+          <h2 className="text-3xl font-bold">All Posts</h2>
+
           {posts ? (
             <div className="space-y-6 flex flex-col">
               {posts.map((post) => (

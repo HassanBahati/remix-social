@@ -2,6 +2,7 @@ import React from "react";
 import { CalendarIcon, ClockIcon } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
+import { Link } from "@remix-run/react";
 
 type PostProps = {
   id: string;
@@ -13,6 +14,7 @@ type PostProps = {
 };
 
 export default function PostCard({
+  id,
   title,
   body,
   updatedAt,
@@ -20,34 +22,36 @@ export default function PostCard({
   published,
 }: PostProps) {
   return (
-    <Card className="overflow-hidden transition-all duration-200 hover:shadow-xl">
-      <CardContent className="p-6">
-        {title && (
-          <h2 className="text-2xl font-bold text-primary mb-3 line-clamp-2">
-            {title}
-          </h2>
-        )}
-        {body && (
-          <p className="text-muted-foreground mb-4 line-clamp-3">{body}</p>
-        )}
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
-          <div className="flex items-center space-x-2">
-            <Badge variant={published ? "default" : "secondary"}>
-              {published ? "Published" : "Draft"}
-            </Badge>
-            <div className="flex items-center">
-              <CalendarIcon className="w-4 h-4 mr-1" />
-              <span>{new Date(createdAt).toLocaleDateString()}</span>
-            </div>
-          </div>
-          {updatedAt && (
-            <div className="flex items-center">
-              <ClockIcon className="w-4 h-4 mr-1" />
-              <span>Updated: {new Date(updatedAt).toLocaleDateString()}</span>
-            </div>
+    <Link to={`/posts/${id}`}>
+      <Card className="overflow-hidden transition-all duration-200 hover:shadow-xl">
+        <CardContent className="p-6">
+          {title && (
+            <h2 className="text-2xl font-bold text-primary mb-3 line-clamp-2">
+              {title}
+            </h2>
           )}
-        </div>
-      </CardContent>
-    </Card>
+          {body && (
+            <p className="text-muted-foreground mb-4 line-clamp-3">{body}</p>
+          )}
+          <div className="flex items-center justify-between text-sm text-muted-foreground">
+            <div className="flex items-center space-x-2">
+              <Badge variant={published ? "default" : "secondary"}>
+                {published ? "Published" : "Draft"}
+              </Badge>
+              <div className="flex items-center">
+                <CalendarIcon className="w-4 h-4 mr-1" />
+                <span>{new Date(createdAt).toLocaleDateString()}</span>
+              </div>
+            </div>
+            {updatedAt && (
+              <div className="flex items-center">
+                <ClockIcon className="w-4 h-4 mr-1" />
+                <span>Updated: {new Date(updatedAt).toLocaleDateString()}</span>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
