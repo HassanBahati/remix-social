@@ -1,7 +1,8 @@
 # Welcome to Remix Social!
 
-- 📖 [Remix docs](https://remix.run/docs)
   ![alt text](/.github/image.png)
+
+- 📖 [Remix docs](https://remix.run/docs)
 
 ## Development
 
