@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useFetcher } from "@remix-run/react";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -23,6 +24,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function CreatePostDialog() {
   const [isOpen, setIsOpen] = useState(false);
+  const fetcher = useFetcher();
 
   const {
     control,
@@ -32,9 +34,16 @@ export default function CreatePostDialog() {
     resolver: zodResolver(formSchema),
   });
 
-  const handleCreatePost = (data: FormValues) => {
-    console.log(data);
-    setIsOpen(false);
+  const handleCreatePost = async (data: FormValues) => {
+    try {
+      fetcher.submit(data, { method: "post", action: "/posts/new" });
+
+      alert("Post created successfully!");
+      setIsOpen(false);
+    } catch (error) {
+      console.log(error);
+      alert("Failed to create post!");
+    }
   };
 
   return (

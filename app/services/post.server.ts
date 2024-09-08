@@ -10,3 +10,13 @@ export async function getPostById(id: string): Promise<Post | null> {
     where: { id },
   });
 }
+
+export async function createPost(title: string, body: string): Promise<Post> {
+  return db.post.create({
+    data: {
+      title,
+      body,
+      published: false,
+    },
+  });
+}
