@@ -14,9 +14,6 @@ export const meta: MetaFunction = () => {
 
 export const loader: LoaderFunction = async () => {
   const posts = await getPosts();
-  if (!posts) {
-    return [{ title: "first", body: "My first post" }];
-  }
   return json(posts);
 };
 
@@ -32,7 +29,7 @@ export default function Index() {
               View All Posts
             </Link>
           </div>
-          {posts ? (
+          {posts?.length > 0 ? (
             <div className="space-y-6 flex flex-col">
               {posts.map((post) => (
                 <PostCard key={post.id} {...post} />

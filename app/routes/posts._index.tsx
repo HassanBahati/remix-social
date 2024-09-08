@@ -17,8 +17,7 @@ export default function PostDetails() {
       <main className="flex-grow overflow-auto p-4">
         <div className="max-w-3xl mx-auto space-y-8">
           <h2 className="text-3xl font-bold">All Posts</h2>
-
-          {posts ? (
+          {posts?.length > 0 ? (
             <div className="space-y-6 flex flex-col">
               {posts.map((post) => (
                 <PostCard key={post.id} {...post} />
