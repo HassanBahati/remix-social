@@ -3,6 +3,7 @@ import { CalendarIcon, ClockIcon } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Link } from "@remix-run/react";
+import formatDateTime from "~/lib/utils";
 
 type PostProps = {
   id: string;
@@ -40,13 +41,13 @@ export default function PostCard({
               </Badge>
               <div className="flex items-center">
                 <CalendarIcon className="w-4 h-4 mr-1" />
-                <span>{new Date(createdAt).toLocaleDateString()}</span>
+                <span>{formatDateTime(createdAt)}</span>
               </div>
             </div>
             {updatedAt && (
               <div className="flex items-center">
                 <ClockIcon className="w-4 h-4 mr-1" />
-                <span>Updated: {new Date(updatedAt).toLocaleDateString()}</span>
+                <span>Updated: {formatDateTime(updatedAt)}</span>
               </div>
             )}
           </div>
